@@ -1,155 +1,222 @@
 :root {
-	--dark: #374151;
-	--darker: #1F2937;
-	--darkest: #111827;
-	--grey: #6B7280;
-	--pink: #EC4899;
-	--purple: #8B5CF6;
+	--dark: #00b0ef;
+	--darkest: #0b1427;
+	--grey: #cecece;
+	--pink: #ee1984;
+	--purple: #6a2dfa;
 	--light: #EEE;
+	--green: #00F9E6;
 }
-
 * {
 	margin: 0;
 	box-sizing: border-box;
 	font-family: "Fira sans", sans-serif;
+    padding: auto;
 }
 
-body {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	color: #FFF;
-	background-color: var(--dark);
-}
-
-header {
-	padding: 2rem 1rem;
-	max-width: 800px;
-	width: 100%;
-	margin: 0 auto;
-}
-
-header h1{ 
-	font-size: 2.5rem;
-	font-weight: 300;
-	color: var(--grey);
-	margin-bottom: 1rem;
-}
-
-#NT-form { /*NT de nueva tarea*/
-	display: flex;;
-}
-
-input, button {
-	appearance: none;
-	border: none;
-	outline: none;
-	background: none;
-}
-
-#NT-input {
-	flex: 1 1 0%;
-	background-color: var(--darker);
-	padding: 1rem;
-	border-radius: 1rem;
-	margin-right: 1rem;
-	color: var(--light);
-	font-size: 1.25rem;
-}
-
-#NT-input::placeholder {
-	color: var(--grey);
-}
-
-#NT-submit {
+h1{ 
+	font-size: 3.5rem;
+	font-weight: 400;
 	color: var(--pink);
-	font-size: 1.25rem;
-	font-weight: 700;
-	background-image: linear-gradient(to right, var(--pink), var(--purple));
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	cursor: pointer;
-	transition: 0.4s;
+	margin-bottom: 2rem;
 }
 
-#NT-submit:hover {
-	opacity: 0.8;
+.navbar-top{
+    background-color: var(--darkest);
+    padding: 5px 20px;    
 }
 
-#NT-submit:active {
-	opacity: 0.6;
+.navbar-top ul{
+    list-style-type: none;
 }
 
-main {
-	flex: 1 1 0%;
-	max-width: 800px;
-	width: 100%;
-	margin: 0 auto;
+.navbar-top a{
+    text-decoration: none;
+    color: azure;
+    display: block;
+    
+}
+.navbar-top a:hover{
+    text-decoration: none;    
 }
 
-.Tareas-list {
-	padding: 1rem;
+.logo img{    
+    height: 50px;
 }
 
-.Tareas-list h2 {
-	font-size: 1.5rem;
-	font-weight: 300;
-	color: var(--grey);
-	margin-bottom: 1rem;
+.menu li{
+    font-size: 16px;
+    padding: 15px 5px;
 }
 
-#Tarea .task {
-	display: flex;
-	justify-content: space-between;
+.button{
+    border-bottom: #444 solid;
+}
+
+body{
+    font-family: sans-serif;
+}
+
+
+/* footer*/
+
+.footer{
+	margin-top: 15%;
 	background-color: var(--darkest);
-	padding: 1rem;
-	border-radius: 1rem;
-	margin-bottom: 1rem;
+	color: #fff;
+  }
+
+.footer .group-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(0, 1fr);
+    grid-gap: 20px;
+    padding: 25px 0px;
 }
 
-.Tarea .content {
-	flex: 1 1 0%;
+.footer .group-1 .social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 5%;
+    text-align: center;
+    transition: all 300ms ease;
+	font-size: 20px;
 }
 
-.Tarea .content .text {
-	color: var(--light);
-	font-size: 1.125rem;
-	width: 100%;
-	display: block;
-	transition: 0.4s;
+.footer .group-1 .social a:hover{
+    color: var(--pink);
 }
 
-.Tarea .content .text:not(:read-only) {
-	color: var(--pink);
+/* ----- Menu movil ----- */
+
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.Tarea .actions {
-	display: flex;
-	margin: 0 -0.5rem;
+.toogle{
+    cursor: pointer;
+    order: 1;
 }
 
-.Tarea .actions button {
-	cursor: pointer;
-	margin: 0 0.5rem;
-	font-size: 1.125rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	transition: 0.4s;
+.logo{
+    flex: 1;
 }
 
-.Tarea .actions button:hover {
-	opacity: 0.8;
+.item.button{
+    order: 2;
 }
 
-.Tarea .actions button:active {
-	opacity: 0.6;
+.item{
+    order: 3;
+    width: 100%;
+    text-align: center;
+    display: none;
 }
 
-.Tarea .actions .edit {
-	background-image: linear-gradient(to right, var(--pink), var(--purple));
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+.item.active{
+    display: block;   
 }
-.Tarea .actions .delete {
-	color: crimson;
+
+.bars{
+    background: var(--grey);
+    display: inline-block;
+    position: relative;
+    height: 2px;
+    width: 18px;
+}
+.bars::before, .bars::after{
+    background: var(--grey);
+    content: "";
+    display: inline-block;
+    position: absolute;
+    height: 2px;
+    width: 18px;
+}
+
+.bars::before{
+    top: 5px;
+}
+
+.bars::after{
+    top: -5px;
+}
+
+
+/* ----- tablet ----- */
+
+@media all and (min-width: 468px){
+    .menu{
+        justify-content: center;        
+    }
+    .logo{
+        flex: 1;
+    }
+    .item.button{
+        width: auto;
+        order: 1;
+        display: block;
+    }
+    .toogle{
+        order: 2;
+    }
+    .button{
+        border: 0;
+    }
+    .button a{
+        text-decoration: none;
+        padding: 7px 15px;
+        background-color: var(--pink)a;
+        border: 1px;
+        border-radius: 50em;        
+    }
+    
+    .button a:hover{
+        background-color: var(--pink);
+        color: #fff;
+    }
+    
+    .button2 a:hover{
+        text-decoration: none;
+		color:var(--pink);
+        padding: 10px 15px;
+        transition: .2s;
+    }    
+
+}
+
+
+/* ----- Menu desktop ----- */
+@media all and (min-width: 768px){
+    .item{
+        display: block;
+        width: auto;
+    }
+    .toogle{
+        display: none;
+    }
+    .logo{
+        order: 0;
+    }
+    .item{
+        order: 1;
+    }
+    .button{
+        order: 2;
+    }
+    .menu li{
+        padding: 15px 10px;
+    }
+    .menu li.button{
+        padding-right: 0;
+    }
 }
