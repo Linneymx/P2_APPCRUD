@@ -1,62 +1,112 @@
-window.addEventListener('load', () => {
-	const form = document.querySelector("#new-task-form");
-	const input = document.querySelector("#new-task-input");
-	const list_el = document.querySelector("#tasks");
+let currid=0;
+  function limpiar(){
+    document.getElementById('info').value='';
+    document.getElementById('serv').value='' ;
+  }
 
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
+  document.querySelector('#cancelar').addEventListener('click',function(){
+      limpiar();      
+   })
 
-		const task = input.value;
+document.querySelector('#guardar').addEventListener('click',function(){
+    const ev = new Array();
+    const info= document.getElementById('info').value;
+    const serv= document.getElementById('serv').value ;
+    ev[0]=info;
+    ev[1]=serv;
+    guardar(ev);
+    limpiar();      
+ })
 
-		const task_el = document.createElement('div');
-		task_el.classList.add('task');
+function guardar(ev) {
+    let n=0;
+    let objeto = {};
 
-		const task_content_el = document.createElement('div');
-		task_content_el.classList.add('content');
+    if (ev[0]!=="" && ev[1] !== ""){
+      n=evts();
+      
+      if (currid==0){
+        if (n==0){
+          n=1;
+        }
+        else{
+          n+=1;
+        }
+        window.localStorage.setItem(0,n)
+      }  
+      else {
+        n=currid;
+      }
 
-		task_el.appendChild(task_content_el);
+      objeto.datos = ev;
+      window.localStorage.setItem(n,JSON.stringify(objeto))
+ 
+      currid=0;
+      location.reload()
+    }
+}
 
-		const task_input_el = document.createElement('input');
-		task_input_el.classList.add('text');
-		task_input_el.type = 'text';
-		task_input_el.value = task;
-		task_input_el.setAttribute('readonly', 'readonly');
+function evts() {
+    let n=0;
+    
+    n=Number(window.localStorage.getItem(0))
+  return n
+}
 
-		task_content_el.appendChild(task_input_el);
+function editar(ev){
+  let id = ev.target.getAttribute('data-id')
 
-		const task_actions_el = document.createElement('div');
-		task_actions_el.classList.add('actions');
-		
-		const task_edit_el = document.createElement('button');
-		task_edit_el.classList.add('edit');
-		task_edit_el.innerText = 'Edit';
+  ev = window.localStorage.getItem(id)
+  let data = JSON.parse(ev)
+  
+  document.getElementById('info').value = data.datos[0];
+  document.getElementById('serv').value = data.datos[1];
+  currid=Number(id)
+}
 
-		const task_delete_el = document.createElement('button');
-		task_delete_el.classList.add('delete');
-		task_delete_el.innerText = 'Delete';
+function eliminar(ev){
+  let id = ev.target.getAttribute('data-id')
+  window.localStorage.removeItem(id) 
+  currid=0;
+  location.reload()
+}
 
-		task_actions_el.appendChild(task_edit_el);
-		task_actions_el.appendChild(task_delete_el);
+function viewfila(ev, id) {
+    let fila = '<tr>'+
+                    '<td>'+ ev.datos[1] + '</td>' +
+                    '<td>'+ ev.datos[0] + '</td>' +
+                    '<td>  <a class="editar btn btn-info" type="submit" value="" data-id=' + id + '>Editar</a></td>' +
+                    '<td>  <a class="eliminar btn btn-danger" type="submit" value="" data-id=' + id + '>Eliminar</a></td>' +
+                  '</tr>';
+    return fila;
+}
 
-		task_el.appendChild(task_actions_el);
+let tabla = '<table class="table table-striped">';
+tabla += '<th scope="col">Servicio</th>';
+tabla += '<th scope="col">Descripcion</th>';
+tabla += '<th scope="col">Editar</th>';
+tabla += '<th scope="col">Eliminar</th>';
 
-		list_el.appendChild(task_el);
+const container = document.querySelector('section[class="section"]')
+let ev = '';
+n=evts();
+if (n!==0){
+  for (let i = 1; i <= n; i++) {
+      ev = window.localStorage.getItem(i)
+      let data = JSON.parse(ev)
+      console.log(data)
 
-		input.value = '';
+      if (data !== null){
+        tabla += viewfila(data, i);   
+      }
+    }
+}
 
-		task_edit_el.addEventListener('click', (e) => {
-			if (task_edit_el.innerText.toLowerCase() == "edit") {
-				task_edit_el.innerText = "Save";
-				task_input_el.removeAttribute("readonly");
-				task_input_el.focus();
-			} else {
-				task_edit_el.innerText = "Edit";
-				task_input_el.setAttribute("readonly", "readonly");
-			}
-		});
+container.innerHTML = container.innerHTML + tabla
 
-		task_delete_el.addEventListener('click', (e) => {
-			list_el.removeChild(task_el);
-		});
-	});
-});
+document.querySelectorAll('.editar').forEach((element) => {
+  element.addEventListener('click', editar)
+})
+document.querySelectorAll('.eliminar').forEach((element) => {
+  element.addEventListener('click', eliminar)
+})
