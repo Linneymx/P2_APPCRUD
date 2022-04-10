@@ -1,6 +1,6 @@
 let currid=0;
   function limpiar(){
-    document.getElementById('info').value='';
+    document.getElementById('infor').value='';
     document.getElementById('serv').value='' ;
   }
 
@@ -10,9 +10,9 @@ let currid=0;
 
 document.querySelector('#guardar').addEventListener('click',function(){
     const ev = new Array();
-    const info= document.getElementById('info').value;
+    const infor= document.getElementById('infor').value;
     const serv= document.getElementById('serv').value ;
-    ev[0]=info;
+    ev[0]=infor;
     ev[1]=serv;
     guardar(ev);
     limpiar();      
@@ -59,7 +59,7 @@ function editar(ev){
   ev = window.localStorage.getItem(id)
   let data = JSON.parse(ev)
   
-  document.getElementById('info').value = data.datos[0];
+  document.getElementById('infor').value = data.datos[0];
   document.getElementById('serv').value = data.datos[1];
   currid=Number(id)
 }
